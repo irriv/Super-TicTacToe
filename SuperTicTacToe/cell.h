@@ -1,5 +1,6 @@
 #ifndef CELL_H
 #define CELL_H
+#include <iostream>
 
 enum class Shape{
     empty,
@@ -12,8 +13,9 @@ class Cell
 public:
     Cell();
     Shape getShape();
-private:
     void setShape(Shape shape);
+    void printCell();
+private:
     Shape shape;
 };
 
