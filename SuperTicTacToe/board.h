@@ -11,7 +11,7 @@ public:
     void printBoard();
     Cell getCell(int index);
     bool setCell(int index, Shape shape);
-    std::vector<Cell>& getCells();
+    std::vector<Cell> getCells();
 private:
    std::vector<Cell> cells;
 };

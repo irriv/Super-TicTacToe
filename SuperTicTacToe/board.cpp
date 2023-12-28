@@ -6,9 +6,6 @@ Board::Board()
     for(int i=0; i<9; i++){
         cells.push_back(Cell());
     }
-    for(auto& cell : cells){
-        cell.setShape(Shape::cross);
-    }
 }
 
 void Board::printBoard()
@@ -47,7 +44,7 @@ bool Board::setCell(int index, Shape shape)
     return false;
 }
 
-std::vector<Cell>& Board::getCells()
+std::vector<Cell> Board::getCells()
 {
     return cells;
 }
