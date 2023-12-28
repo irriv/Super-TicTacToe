@@ -56,7 +56,7 @@ Shape TicTacToe::isGameOver()
     return Shape::empty;
 }
 
-Board& TicTacToe::getBoard()
+Board TicTacToe::getBoard()
 {
     return board;
 }

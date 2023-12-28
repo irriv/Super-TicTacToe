@@ -7,7 +7,7 @@ class TicTacToe
 public:
     TicTacToe();
     Shape isGameOver();
-    Board& getBoard();
+    Board getBoard();
     bool getIsGameOver();
 private:
     Board board;
