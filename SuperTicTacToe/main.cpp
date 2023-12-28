@@ -1,11 +1,11 @@
 #include <iostream>
-#include "board.h"
+#include "supertictactoe.h"
 
 using namespace std;
 
 int main()
 {
-    Board board = Board();
-    board.printBoard();
+    SuperTicTacToe game = SuperTicTacToe();
+    game.play();
     return 0;
 }
