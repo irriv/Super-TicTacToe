@@ -17,12 +17,13 @@ private:
     void printTurn();
     void changeTurn();
     void playerInput();
+    void printBoard();
 
     std::vector<TicTacToe> games;
-    TicTacToe* currentGame = nullptr;
+    TicTacToe currentGame;
     Player turn;
     Shape currentShape;
-    int index;
+    int gameIndex;
     bool gameOver;
 };
 
