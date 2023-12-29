@@ -76,11 +76,14 @@ void SuperTicTacToe::gameLoop()
     isGameOver();
     if(winner != Shape::empty){
         printBoard();
-        if(turn == Player::player1){
+        if(winner == Shape::cross){
             std::cout << "Player 1 (Cross) wins!" << std::endl;
         }
-        else{
+        else if(winner == Shape::circle){
             std::cout << "Player 2 (Circle) wins!" << std::endl;
+        }
+        else{
+            std::cout << "It's a tie!" << std::endl;
         }
         return;
     }
@@ -193,5 +196,16 @@ void SuperTicTacToe::isGameOver()
         if(games[2].isGameOver() != Shape::empty){
             winner = games[2].isGameOver();
         }
+    }
+
+    bool tie = true;
+    for(TicTacToe& game : games){
+        if(game.isGameOver() == Shape::empty){
+            tie = false;
+        }
+    }
+
+    if(tie && winner == Shape::empty){
+        winner = Shape::tie;
     }
 }
