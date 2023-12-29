@@ -7,11 +7,10 @@ class TicTacToe
 public:
     TicTacToe();
     Shape isGameOver();
-    Board getBoard();
-    bool getIsGameOver();
+    Board& getBoard();
 private:
     Board board;
-    bool gameIsOver = false;
+    Shape winner = Shape::empty;
 };
 
 #endif // TICTACTOE_H
