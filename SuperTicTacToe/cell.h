@@ -5,7 +5,8 @@
 enum class Shape{
     empty,
     circle,
-    cross
+    cross,
+    tie
 };
 
 class Cell
