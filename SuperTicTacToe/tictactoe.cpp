@@ -53,7 +53,19 @@ Shape TicTacToe::isGameOver()
         }
     }
 
-    if(winner == Shape::cross){
+    bool tie = true;
+    for(Cell& cell : cells){
+        if(cell.getShape() == Shape::empty){
+            tie = false;
+        }
+    }
+
+    if(tie && winner == Shape::empty){
+        std::cout << "It's a tie on this board!" << std::endl;
+        winner = Shape::tie;
+        return winner;
+    }
+    else if(winner == Shape::cross){
         std::cout << "Player 1 (Cross) wins on this board!" << std::endl;
         return winner;
     }
