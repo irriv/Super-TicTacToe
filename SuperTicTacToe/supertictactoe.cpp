@@ -8,23 +8,23 @@ SuperTicTacToe::SuperTicTacToe()
     }
     turn = Player::player1;
     currentShape = Shape::cross;
-    currentGame = games[5];
+    gameIndex = 5;
 }
 
 void SuperTicTacToe::play()
 {
-    while(!gameOver){
-        playerInput();
+    while(winner == Shape::empty){
+        gameLoop();
     }
 }
 
 void SuperTicTacToe::printTurn()
 {
     if (turn == Player::player1){
-        std::cout << "Player 1's turn!" << std::endl;
+        std::cout << "Player 1 (Cross) turn!" << std::endl;
     }
     else{
-        std::cout << "Player 2's turn!" << std::endl;
+        std::cout << "Player 2 (Circle) turn!" << std::endl;
     }
 }
 
@@ -40,79 +40,84 @@ void SuperTicTacToe::changeTurn()
     }
 }
 
-void SuperTicTacToe::playerInput()
+void SuperTicTacToe::gameLoop()
 {
-    printTurn();
     printBoard();
-    // Player picks a coordinate and the cell is set.
+    printTurn();
 
+    // Ask player to fill in a cell.
     int cellIndex = 0;
-    std::string line;
+    std::string cellNumber;
     while(cellIndex < 1 || cellIndex > 9){
-        std::cout << "Which cell to fill in? (1-9): ";
-        std::getline(std::cin, line); // This does not work.
-        std::stringstream ss(line);
-        // Convert input to int
-        if (ss >> cellIndex){
-            // Success
-            if (ss.eof()){
-                if(!currentGame.getBoard().setCell(cellIndex, currentShape)){
-                    std::cout << "Cell is already occupied." << std::endl;
-                }
-                else{
-                    break;
+        std::cout << "Which cell to fill in game #" << gameIndex << "? (1-9): ";
+        std::getline(std::cin, cellNumber);
+
+        try {
+            cellIndex = std::stoi(cellNumber);
+            if(cellIndex < 1 || cellIndex > 9){
+                std::cout << "Index out of bounds." << std::endl;
+            }
+            if(cellNumber.length() != 1){
+                throw(std::exception());
+            }
+            else{
+                if(!games[gameIndex-1].getBoard().setCell(cellIndex-1, currentShape)){
+                    std::cout << "Cell #" << cellIndex << " is already occupied." << std::endl;
+                    cellIndex = 0;
                 }
             }
-        }
-        else{
+        }  catch (const std::exception& e) {
             std::cout << "Invalid input." << std::endl;
+            cellIndex = 0;
         }
     }
 
-    const Shape& result = currentGame.isGameOver();
-
-    // Game is over
-    if(result != Shape::empty){
-        gameOver = true;
+    // Is super game over?
+    isGameOver();
+    if(winner != Shape::empty){
+        printBoard();
         if(turn == Player::player1){
-            std::cout << "Cross wins!" << std::endl;
+            std::cout << "Player 1 (Cross) wins!" << std::endl;
         }
         else{
-            std::cout << "Circle wins!" << std::endl;
+            std::cout << "Player 2 (Circle) wins!" << std::endl;
         }
+        return;
     }
-    else{
-        int cellIndex = 0;
-        // Check if the game at the coordinate is not over
-        if(!games[cellIndex].getIsGameOver()){
-            currentGame = games[cellIndex];
-        }
-        else{
-            // Player chooses coordinate
-            gameIndex = 0;
-            std::string line;
-            while(gameIndex < 1 || gameIndex > 9){
-                std::cout << "Which game to play at next? (1-9): ";
-                std::getline(std::cin, line);
-                std::stringstream ss(line);
-                // Convert input to int
-                if (ss >> gameIndex){
-                    // Success
-                    if (ss.eof()){
-                        gameIndex--;
-                        if(!games[gameIndex].getIsGameOver()){
-                            break;
-                        }
-                        else{
-                            std::cout << "Game is already over at " << gameIndex+1 << std::endl;
-                        }
-                    }
+
+    // Check if the game at the new coordinate is not over
+    if(games[cellIndex-1].isGameOver() == Shape::empty){
+        gameIndex = cellIndex;
+        changeTurn();
+    }
+    else{ // Player chooses coordinate
+        printBoard();
+        changeTurn();
+        printTurn();
+        std::cout <<  "Game is already over at game #" << cellIndex << "." << std::endl;
+        gameIndex = 0;
+        std::string nextGame;
+        while(gameIndex < 1 || gameIndex > 9){
+            std::cout << "Which game to play at next? (1-9): ";
+            std::getline(std::cin, nextGame);
+
+            // Convert input to int
+            try {
+                gameIndex = std::stoi(nextGame);
+                if(gameIndex < 1 || gameIndex > 9){
+                    std::cout << "Index out of bounds." << std::endl;
                 }
-                else{
-                    std::cout << "Invalid input." << std::endl;
+                if(nextGame.length() != 1){
+                    throw(std::exception());
                 }
+                if(games[gameIndex-1].isGameOver() != Shape::empty){
+                    std::cout << "Game is already over at game #" << gameIndex << "." << std::endl;
+                    gameIndex = 0;
+                }
+            }  catch (const std::exception& e) {
+                std::cout << "Invalid input." << std::endl;
+                gameIndex = 0;
             }
-            changeTurn();
         }
     }
 }
@@ -144,6 +149,49 @@ void SuperTicTacToe::printBoard()
                     }
                 }
             }
+        }
+    }
+}
+
+void SuperTicTacToe::isGameOver()
+{
+    // Horizontal lines
+    int i = 0;
+    while(i < 9){
+        if(games[i].isGameOver() == games[i+1].isGameOver() &&
+            games[i].isGameOver() == games[i+2].isGameOver()){
+            if(games[i].isGameOver() != Shape::empty){
+                winner = games[i].isGameOver();
+            }
+        }
+        i += 3;
+    }
+
+    // Vertical lines
+    i = 0;
+    while(i < 3){
+        if(games[i].isGameOver() == games[i+3].isGameOver() &&
+            games[i].isGameOver() == games[i+6].isGameOver()){
+            if(games[i].isGameOver() != Shape::empty){
+                winner = games[i].isGameOver();
+            }
+        }
+        i++;
+    }
+
+    // Top-left to Bottom-right diagonal
+    if(games[0].isGameOver() == games[4].isGameOver() &&
+        games[0].isGameOver() == games[8].isGameOver()){
+        if(games[0].isGameOver() != Shape::empty){
+            winner = games[0].isGameOver();
+        }
+    }
+
+    // Top-right to Bottom-Left diagonal
+    if(games[2].isGameOver() == games[4].isGameOver() &&
+        games[2].isGameOver() == games[6].isGameOver()){
+        if(games[2].isGameOver() != Shape::empty){
+            winner = games[2].isGameOver();
         }
     }
 }
