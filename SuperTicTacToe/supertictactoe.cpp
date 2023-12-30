@@ -10,6 +10,7 @@ SuperTicTacToe::SuperTicTacToe()
 
 void SuperTicTacToe::play()
 {
+    printBoard();
     askWhoGoesFirst();
     askGameIndex();
     while(winner == Shape::empty){ // Game loops until it ends.
