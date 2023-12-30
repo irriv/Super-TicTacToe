@@ -2,10 +2,18 @@
 
 TicTacToe::TicTacToe()
 {
-    board = Board();
 }
 
-Shape TicTacToe::isGameOver()
+Board& TicTacToe::getBoard()
+{
+    return board;
+}
+
+/*
+ * Checks if the game has a winner.
+ * Returns the winner as a Shape.
+ */
+Shape& TicTacToe::isGameOver()
 {
     if(winner != Shape::empty){
         return winner;
@@ -13,31 +21,27 @@ Shape TicTacToe::isGameOver()
 
     std::vector<Cell> cells = board.getCells();
 
-    // Horizontal lines
-    int i = 0;
-    while(i < 9){
+    // Horizontal lines.
+    for(int i=0; i<9; i+=3){
         if(cells[i].getShape() == cells[i+1].getShape() &&
             cells[i].getShape() == cells[i+2].getShape()){
             if(cells[i].getShape() != Shape::empty){
                 winner = cells[i].getShape();
             }
         }
-        i += 3;
     }
 
-    // Vertical lines
-    i = 0;
-    while( i < 3){
+    // Vertical lines.
+    for(int i=0; i<3; i++){
         if(cells[i].getShape() == cells[i+3].getShape() &&
             cells[i].getShape() == cells[i+6].getShape()){
             if(cells[i].getShape() != Shape::empty){
                 winner = cells[i].getShape();
             }
         }
-        i++;
     }
 
-    // Top-left to Bottom-right diagonal
+    // Top-left to bottom-right diagonal.
     if(cells[0].getShape() == cells[4].getShape() &&
         cells[0].getShape() == cells[8].getShape()){
         if(cells[0].getShape() != Shape::empty){
@@ -45,7 +49,7 @@ Shape TicTacToe::isGameOver()
         }
     }
 
-    // Top-right to Bottom-Left diagonal
+    // Top-right to bottom-Left diagonal.
     if(cells[2].getShape() == cells[4].getShape() &&
         cells[2].getShape() == cells[6].getShape()){
         if(cells[2].getShape() != Shape::empty){
@@ -53,6 +57,7 @@ Shape TicTacToe::isGameOver()
         }
     }
 
+    // Tie check. All cells have to be filled.
     bool tie = true;
     for(Cell& cell : cells){
         if(cell.getShape() == Shape::empty){
@@ -60,7 +65,7 @@ Shape TicTacToe::isGameOver()
         }
     }
 
-    if(tie && winner == Shape::empty){
+    if(tie && winner == Shape::empty){ // All cells filled and no winner found.
         std::cout << "It's a tie on this board!" << std::endl;
         winner = Shape::tie;
         return winner;
@@ -73,12 +78,7 @@ Shape TicTacToe::isGameOver()
         std::cout << "Player 2 (Circle) wins on this board!" << std::endl;
         return winner;
     }
-    else{
-        return Shape::empty;
+    else{ // No winner found, return Shape::empty.
+        return winner;
     }
-}
-
-Board& TicTacToe::getBoard()
-{
-    return board;
 }

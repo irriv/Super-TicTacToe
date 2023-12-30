@@ -6,10 +6,10 @@ class TicTacToe
 {
 public:
     TicTacToe();
-    Shape isGameOver();
+    Shape& isGameOver();
     Board& getBoard();
 private:
-    Board board;
+    Board board = Board();
     Shape winner = Shape::empty;
 };
 

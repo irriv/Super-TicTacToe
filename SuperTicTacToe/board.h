@@ -2,16 +2,15 @@
 #define BOARD_H
 #include <vector>
 #include "cell.h"
-#include <iostream>
 
 class Board
 {
 public:
     Board();
-    void printBoard();
-    Cell getCell(int index);
-    bool setCell(int index, Shape shape);
-    std::vector<Cell> getCells();
+    Cell& getCell(int index);
+    void setCell(int index, Shape shape);
+    const std::vector<Cell>& getCells();
+    // void printBoard(); Not in use
 private:
    std::vector<Cell> cells;
 };

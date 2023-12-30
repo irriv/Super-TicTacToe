@@ -5,14 +5,15 @@ using namespace std;
 
 int main()
 {
-    while (true){
+    while(true){
         SuperTicTacToe game = SuperTicTacToe();
         std::cout << "SuperTicTacToe game starts!" << std::endl;
-        game.play();
-        std::string replay;
-        while (true){
-            std::cout << "Play again? (Y/N): ";
+        game.play(); // Start the game.
 
+        // Ask player(s) if they want to replay the game.
+        std::string replay;
+        while(true){
+            std::cout << "Play again? (Y/N): ";
             std::getline(std::cin, replay);
             if(replay == "Y" || replay == "y"){
                 break;
@@ -24,7 +25,8 @@ int main()
                 std::cout << "Invalid input." << std::endl;
             }
         }
-        if(replay == "N" || replay == "n"){
+
+        if(replay == "N" || replay == "n"){ // Exit the program.
             break;
         }
     }

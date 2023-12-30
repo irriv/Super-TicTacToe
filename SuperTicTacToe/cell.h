@@ -2,7 +2,7 @@
 #define CELL_H
 #include <iostream>
 
-enum class Shape{
+enum class Shape{ // Shape that is in a cell, tie is only used when determining the winner.
     empty,
     circle,
     cross,
@@ -13,12 +13,11 @@ class Cell
 {
 public:
     Cell();
-    Shape getShape();
+    Shape& getShape();
     void setShape(Shape shape);
     void printCell();
 private:
-    Shape shape;
+    Shape shape = Shape::empty;
 };
-
 
 #endif // CELL_H

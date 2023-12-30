@@ -1,13 +1,6 @@
 #ifndef SUPERTICTACTOE_H
 #define SUPERTICTACTOE_H
 #include "tictactoe.h"
-#include <sstream>
-#include <limits>
-
-enum class Player{
-    player1,
-    player2
-};
 
 class SuperTicTacToe
 {
@@ -15,18 +8,19 @@ public:
     SuperTicTacToe();
     void play();
 private:
-    void printTurn();
-    void changeTurn();
-    void changeGame();
-    void gameLoop();
+    void askWhoGoesFirst();
+    void askCellIndex(int& cellIndex);
+    void askGameIndex();
     void printBoard();
+    void printTurn();
+    void printWinner();
+    void changeTurn();
+    void gameLoop();
     void isGameOver();
 
     std::vector<TicTacToe> games;
-    int cellIndex = 1;
-    int gameIndex;
-    Player turn;
-    Shape currentShape;
+    int currentGameIndex;
+    Shape currentShape = Shape::cross;
     Shape winner = Shape::empty;
 };
 

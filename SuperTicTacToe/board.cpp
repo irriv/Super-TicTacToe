@@ -8,6 +8,37 @@ Board::Board()
     }
 }
 
+Cell& Board::getCell(int index)
+{
+    if(index > -1 && index < 9){ // 0-8 allowed.
+        return cells[index];
+    }
+    else{ // Should never end up in here.
+        throw("Index out of bounds");
+    }
+}
+
+/*
+ * Cell is only set if it is empty.
+ */
+void Board::setCell(int index, Shape shape)
+{
+    if(index > -1 && index < 9){ // 0-8 allowed.
+        if(cells[index].getShape() == Shape::empty){
+            cells[index].setShape(shape);
+        }
+    }
+    else{ // Should never end up in here.
+        throw("Index out of bounds");
+    }
+}
+
+const std::vector<Cell>& Board::getCells()
+{
+    return cells;
+}
+
+/*
 void Board::printBoard()
 {
     for(int i=0; i<9; i++){
@@ -16,7 +47,7 @@ void Board::printBoard()
         if(i == 8){
             return;
         }
-        else if (i == 2 || i == 5){
+        else if(i == 2 || i == 5){
             std::cout << std::endl << "---------" << std::endl;
         }
         else{
@@ -24,29 +55,4 @@ void Board::printBoard()
         }
     }
 }
-
-Cell Board::getCell(int index)
-{
-    if (index < 9){
-        return cells[index];
-    }
-    else {
-        throw("Index out of bounds");
-    }
-}
-
-bool Board::setCell(int index, Shape shape)
-{
-    if(cells[index].getShape() == Shape::empty){
-        cells[index].setShape(shape);
-        return true;
-    }
-    return false;
-}
-
-std::vector<Cell> Board::getCells()
-{
-    return cells;
-}
-
-
+*/

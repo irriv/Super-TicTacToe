@@ -2,10 +2,9 @@
 
 Cell::Cell()
 {
-    shape = Shape::empty;
 }
 
-Shape Cell::getShape()
+Shape& Cell::getShape()
 {
     return shape;
 }
