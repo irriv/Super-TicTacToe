@@ -9,6 +9,7 @@ public:
     Shape& isGameOver();
     Board& getBoard();
 private:
+    void markWin();
     Board board = Board();
     Shape winner = Shape::empty;
 };

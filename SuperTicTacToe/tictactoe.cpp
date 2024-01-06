@@ -10,6 +10,32 @@ Board& TicTacToe::getBoard()
 }
 
 /*
+ * If the game has a winner,
+ * fill the board with the winner's shapes forming the winner's shape.
+ */
+void TicTacToe::markWin()
+{
+    board = Board();
+    if(winner == Shape::cross){
+        board.setCell(0, winner);
+        board.setCell(2, winner);
+        board.setCell(4, winner);
+        board.setCell(6, winner);
+        board.setCell(8, winner);
+    }
+    else if(winner == Shape::circle){
+        board.setCell(0, winner);
+        board.setCell(1, winner);
+        board.setCell(2, winner);
+        board.setCell(3, winner);
+        board.setCell(5, winner);
+        board.setCell(6, winner);
+        board.setCell(7, winner);
+        board.setCell(8, winner);
+    }
+}
+
+/*
  * Checks if the game has a winner.
  * Returns the winner as a Shape.
  */
@@ -72,10 +98,12 @@ Shape& TicTacToe::isGameOver()
     }
     else if(winner == Shape::cross){
         //std::cout << "Player 1 (Cross) wins on this board!" << std::endl;
+        markWin();
         return winner;
     }
     else if(winner == Shape::circle){
         //std::cout << "Player 2 (Circle) wins on this board!" << std::endl;
+        markWin();
         return winner;
     }
     else{ // No winner found, return Shape::empty.
