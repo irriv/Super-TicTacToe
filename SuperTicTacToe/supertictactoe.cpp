@@ -105,15 +105,22 @@ void SuperTicTacToe::askGameIndex()
     }
 }
 
+void SuperTicTacToe::clearConsole()
+{
+    system("cls");
+}
+
 /*
  * Prints the SuperTicTacToe board.
  * This was difficult.
  */
 void SuperTicTacToe::printBoard()
 {
+    std::cout << "=========================================" << std::endl; // Print top of board frame.
     for(int gameRowStart=0; gameRowStart<9; gameRowStart+=3){ // Index of the first TicTacToe game in the horizontal row (0, 3, 6).
         int gameRowEnd = gameRowStart + 3; // End of the game row index (3, 6, 9).
         for(int currentRow=0; currentRow<3; currentRow++){ // Row of the TicTacToe game being printed (0-2).
+            std::cout << "|| "; // Print left side of board frame.
             for(int gameIndex=gameRowStart; gameIndex<gameRowEnd; gameIndex++){ // Index of the current game being printed (0-2, 3-5, 6-8).
                 Board board = games[gameIndex].getBoard();
                 for(int cellIndex=0; cellIndex<3; cellIndex++){ // Cell index of the board being printed (0-2).
@@ -121,23 +128,25 @@ void SuperTicTacToe::printBoard()
                     if(cellIndex != 2){ // Print '|' only between the inner cell gaps.
                         std::cout << " | ";
                     }
+                    // Print right side of board frame in every following case.
                     else if(gameIndex != gameRowEnd-1){ // Print '||' in inner gaps of TicTacToe games in the row.
                         std::cout << " || ";
                     }
                     else if(gameIndex == gameRowEnd-1 && currentRow != 2){ // Print line breaks after printing the cells if it is not the last row of the TicTacToe game.
-                        std::cout << std::endl;
+                        std::cout << " ||" << std::endl;
                     }
-                    else if(gameIndex != 8){ // Print horizontal separator in inner gaps of TicTacToe games in the SuperTicTacToe game.
-                        std::cout << std::endl <<
-                        "===================================" << std::endl;
+                    else if(gameIndex != 8){ // Print horizontal separator after a row of games have been printed.
+                        std::cout << " ||" << std::endl <<
+                        "=========================================" << std::endl;
                     }
                     else{ // Print line break instead of horizontal separator after the whole board is printed.
-                        std::cout << std::endl;
+                        std::cout << " ||" << std::endl;
                     }
                 }
             }
         }
     }
+    std::cout << "=========================================" << std::endl; // Print bottom of board frame.
 }
 
 void SuperTicTacToe::printTurn()
@@ -182,6 +191,7 @@ void SuperTicTacToe::changeTurn()
 void SuperTicTacToe::gameLoop()
 {
     // Print status of the game.
+    clearConsole();
     printBoard();
     printTurn();
 
@@ -193,6 +203,7 @@ void SuperTicTacToe::gameLoop()
     // Check if the game has ended.
     isGameOver();
     if(winner != Shape::empty){ // SuperTicTacToe game has ended.
+        clearConsole();
         printBoard();
         printWinner();
         return;
@@ -204,6 +215,7 @@ void SuperTicTacToe::gameLoop()
         changeTurn();
     }
     else{ // Game was over at the new coordinate. Player chooses coordinate.
+        clearConsole();
         printBoard();
         changeTurn();
         printTurn();

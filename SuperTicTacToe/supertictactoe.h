@@ -11,6 +11,7 @@ private:
     void askWhoGoesFirst();
     void askCellIndex(int& cellIndex);
     void askGameIndex();
+    void clearConsole();
     void printBoard();
     void printTurn();
     void printWinner();

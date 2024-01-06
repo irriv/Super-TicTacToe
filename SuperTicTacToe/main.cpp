@@ -16,6 +16,7 @@ int main()
             std::cout << "Play again? (Y/N): ";
             std::getline(std::cin, replay);
             if(replay == "Y" || replay == "y"){
+                system("cls"); // Clear console if player(s) replay.
                 break;
             }
             else if(replay == "N" || replay == "n"){

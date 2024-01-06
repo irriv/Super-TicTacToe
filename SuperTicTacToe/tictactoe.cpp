@@ -66,16 +66,16 @@ Shape& TicTacToe::isGameOver()
     }
 
     if(tie && winner == Shape::empty){ // All cells filled and no winner found.
-        std::cout << "It's a tie on this board!" << std::endl;
+        //std::cout << "It's a tie on this board!" << std::endl;
         winner = Shape::tie;
         return winner;
     }
     else if(winner == Shape::cross){
-        std::cout << "Player 1 (Cross) wins on this board!" << std::endl;
+        //std::cout << "Player 1 (Cross) wins on this board!" << std::endl;
         return winner;
     }
     else if(winner == Shape::circle){
-        std::cout << "Player 2 (Circle) wins on this board!" << std::endl;
+        //std::cout << "Player 2 (Circle) wins on this board!" << std::endl;
         return winner;
     }
     else{ // No winner found, return Shape::empty.
